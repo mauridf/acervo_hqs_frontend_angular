@@ -1,0 +1,10 @@
+<div>
+  <h3>Editar Editora</h3>
+</div>
+<form class="example-container" [formGroup]="editoraForm" (ngSubmit)="updateEditora(editoraForm.value)">
+  <mat-form-field>
+    <input matInput name="nomeEditora" placeholder="Nome da Editora" formControlName="nomeEditora">
+  </mat-form-field>
+
+  <button type="submit" [disabled]="!editoraForm.valid" mat-button color="primary" >Editar</button>
+</form>
