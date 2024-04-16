@@ -1,4 +1,4 @@
 export class Editoras {
-  idEditora!: number;
+  id!: number;
   nomeEditora!: string;
 }

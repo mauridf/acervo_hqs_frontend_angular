@@ -1,1 +1,67 @@
-<p>personagens-editar works!</p>
+<div>
+    <h3>Editar Personagem</h3>
+  </div>
+  
+  <div *ngIf="successMessage" class="success-message">
+    {{ successMessage }}
+    <button mat-icon-button (click)="clearMessages()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+    <button mat-icon-button (click)="clearMessages()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+<form *ngIf="personagemForm" class="example-container" [formGroup]="personagemForm" (ngSubmit)="updatePersonagem()">
+    <!-- Input hidden para o ID -->
+    <input type="hidden" formControlName="id">
+
+    <mat-form-field class="campo-vertical">
+        <mat-label>Nome do Personagem</mat-label>
+        <input matInput formControlName="nomePersonagem" placeholder="Nome do Personagem" (blur)="updateErrorMessage()">
+        <mat-error *ngIf="personagemForm.get('nomePersonagem')?.hasError('required') && (personagemForm.get('nomePersonagem')?.dirty || personagemForm.get('nomePersonagem')?.touched)">
+        Você deve inserir um valor.
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="campo-vertical">
+        <mat-label>Observação</mat-label>
+        <textarea matInput formControlName="observacao" placeholder="Observação"></textarea>
+    </mat-form-field>
+    
+    <mat-form-field class="campo-vertical">
+        <mat-label>Data de Criação</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="dataCriacao">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="personagemForm.get('dataCriacao')?.hasError('required') && (personagemForm.get('dataCriacao')?.dirty || personagemForm.get('dataCriacao')?.touched)">
+        Você deve selecionar uma data.
+        </mat-error>
+    </mat-form-field>
+    
+    <mat-form-field class="campo-vertical">
+        <mat-label>Tipo de Personagem</mat-label>
+        <mat-select formControlName="tipoPersonagem" placeholder="Selecione um tipo de personagem">
+          <mat-option *ngFor="let tipo of tiposPersonagem" [value]="tipo">{{ getTipoPersonagem(tipo) }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="personagemForm.get('tipoPersonagem')?.hasError('required') && (personagemForm.get('tipoPersonagem')?.dirty || personagemForm.get('tipoPersonagem')?.touched)">
+        Você deve selecionar um tipo de personagem.
+        </mat-error>
+    </mat-form-field>
+
+    <div style="margin-top: 10px;">
+        <button mat-flat-button type="submit" color="primary">Editar</button>
+        <span *ngIf="isLoadingResults">Aguarde...</span>
+    </div>
+
+    <div *ngIf="successMessage" style="color: green;">{{ successMessage }}</div>
+    <div *ngIf="errorMessage" style="color: red;">{{ errorMessage }}</div>
+</form>
+
+<div style="margin-top: 20px;">
+    <button mat-flat-button color="primary" (click)="voltarListaPersonagens()">Voltar para a Lista de Personagens</button>
+</div>

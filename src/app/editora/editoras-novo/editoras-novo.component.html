@@ -1,9 +1,19 @@
 <div>
-  <h3>Adicionar Nova Editora</h3>
+  <h3>Cadastrar Nova Editora</h3>
 </div>
-<form class="example-container" [formGroup]="editoraForm" (ngSubmit)="addEditora(editoraForm.value)">
+<form class="example-container" [formGroup]="editoraForm" (ngSubmit)="addEditora()">
   <mat-form-field>
-    <input matInput name="nomeEditora" placeholder="Nome da Editora" formControlName="nomeEditora">
+    <mat-label>Nome da Editora</mat-label>
+    <input matInput name="nomeEditora" placeholder="Nome da Editora" formControlName="nomeEditora" (blur)="updateErrorMessage()" required>
+    <mat-error *ngIf="nomeEditora.invalid && (nomeEditora.dirty || nomeEditora.touched)">{{errorMessage}}</mat-error>
   </mat-form-field>
-  <button type="submit" [disabled]="!editoraForm.valid" mat-button color="primary" >Adicionar</button>
+  <div style="margin-top: 10px;"> 
+    <button mat-stroked-button type="submit" mat-button color="primary">Adicionar</button>
+    <span *ngIf="isLoadingResults">Aguarde...</span>
+  </div>
+  <div *ngIf="successMessage" style="color: green;">{{ successMessage }}</div>
+  <div *ngIf="errorMessage" style="color: red;">{{ errorMessage }}</div>
 </form>
+<div style="margin-top: 20px;">
+  <button mat-flat-button color="primary" (click)="voltarListaEditoras()">Voltar para a Lista de Editoras</button>
+</div>

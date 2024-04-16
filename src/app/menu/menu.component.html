@@ -3,11 +3,8 @@
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
       [mode]="(isHandset$ | async) ? 'over' : 'side'"
       [opened]="!(isHandset$ | async)">
-    
-    <mat-nav-list>
-      <a mat-list-item routerLink="/edicoes" routerLinkActive="active">Edição</a>
-    </mat-nav-list>
-    
+      
+    <br/><span>ACERVO DE HQS</span><br/>
     <mat-nav-list>
       <a mat-list-item routerLink="/editoras" routerLinkActive="active">Editora</a>
     </mat-nav-list>
@@ -19,6 +16,7 @@
     <mat-nav-list>
       <a mat-list-item routerLink="/hqs" routerLinkActive="active">HQ</a>
     </mat-nav-list>
+    
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
@@ -26,8 +24,7 @@
         type="button"
         aria-label="Toggle sidenav"
         mat-icon-button
-        (click)="drawer.toggle()"
-        *ngIf="isHandset$ | async">
+        (click)="drawer.toggle()">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span>Acervo de HQs</span>

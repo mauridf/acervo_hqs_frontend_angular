@@ -3,16 +3,15 @@
        *ngIf="isLoadingResults">
     <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
   </div>
-  <div class="button-row">
-    <button mat-flat-button color="accent" [routerLink]="['/editoras']"><mat-icon>list</mat-icon> Voltar</button>
+  <div style="margin-top: 20px;">
+    <button mat-flat-button color="primary" [routerLink]="['/editoras']">Voltar para a Lista de Editoras</button>
   </div>
   <mat-card class="example-card">
     <mat-card-header>
       <mat-card-title><h2>{{editora.nomeEditora}}</h2></mat-card-title>
     </mat-card-header>
     <mat-card-actions>
-      <button mat-flat-button color="primary" class="teste" [routerLink]="['/editoras-editar', editora.idEditora]"><mat-icon>edit</mat-icon> Editar</button>
-      <button mat-flat-button color="warn" (click)="deleteEditora(editora.idEditora)"><mat-icon>delete</mat-icon> Excluir</button>
+      <button mat-flat-button color="warn" (click)="deleteEditora(editora.id)"><mat-icon>delete</mat-icon> Excluir</button>
     </mat-card-actions>
   </mat-card>
 </div>

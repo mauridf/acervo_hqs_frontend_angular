@@ -32,6 +32,9 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatTableModule} from '@angular/material/table';
 import {MatToolbarModule } from '@angular/material/toolbar';
 import { HttpClientModule } from '@angular/common/http';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -70,7 +73,10 @@ import { HttpClientModule } from '@angular/common/http';
     MatSelectModule,
     MatSidenavModule,
     MatTableModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatPaginatorModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [],
   bootstrap: [AppComponent]

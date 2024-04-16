@@ -42,10 +42,10 @@ const routes: Routes = [
     component: EdicoesEditarComponent,
     data: { title: 'Editar Edição' }
   },
-  { path: '',
-    redirectTo: '/edicoes',
-    pathMatch: 'full'
-  },
+  // { path: '',
+  //   redirectTo: '/edicoes',
+  //   pathMatch: 'full'
+  // },
   {
     path: 'editoras',
     component: EditorasComponent,
@@ -66,10 +66,10 @@ const routes: Routes = [
     component: EditorasEditarComponent,
     data: { title: 'Editar a Editora' }
   },
-  { path: '',
-    redirectTo: '/editoras',
-    pathMatch: 'full'
-  },
+  // { path: '',
+  //   redirectTo: '/editoras',
+  //   pathMatch: 'full'
+  // },
   {
     path: 'personagens',
     component: PersonagensComponent,
@@ -90,10 +90,10 @@ const routes: Routes = [
     component: PersonagensEditarComponent,
     data: { title: 'Editar Personagem' }
   },
-  { path: '',
-    redirectTo: '/personagens',
-    pathMatch: 'full'
-  },
+  // { path: '',
+  //   redirectTo: '/personagens',
+  //   pathMatch: 'full'
+  // },
   {
     path: 'hqs',
     component: HqsComponent,

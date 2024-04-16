@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from './../../service/api-scans-cqrs.service';
+
 @Component({
   selector: 'app-editoras-editar',
   templateUrl: './editoras-editar.component.html',
@@ -9,39 +10,55 @@ import { ApiService } from './../../service/api-scans-cqrs.service';
 })
 export class EditorasEditarComponent implements OnInit {
 
-  idEditora!: number;
+  id!: number;
   editoraForm!: FormGroup;
-  nomeEditora: String = '';
   isLoadingResults = false;
+  successMessage: string = '';
+  errorMessage: string = '';
+
   constructor(private router: Router, private route: ActivatedRoute, private api: ApiService, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    this.getEditora(this.route.snapshot.params['id']);
-    this.editoraForm = this.formBuilder.group({
-   'nomeEditora' : [null, Validators.required]
- });
- }
+    this.id = this.route.snapshot.params['id']; // Atribuir o valor de id aqui
+    this.getEditora(this.id);
+  }
 
- getEditora(id: number) {
-  this.api.getEditora(id).subscribe(data => {
-    this.idEditora = data.idEditora;
-    this.editoraForm.setValue({
-      nomeEditora: data.nomeEditora
+  getEditora(id: number) {
+    this.api.getEditora(id).subscribe(data => {
+      console.log('Dados da editora:', data);
+      this.editoraForm = this.formBuilder.group({
+        'id': [data.id],
+        'nomeEditora': [data?.nomeEditora, Validators.required]
+      });
     });
-  });
-}
+  }
 
-updateEditora(form: NgForm) {
-  this.isLoadingResults = true;
-  this.api.updateEditora(this.idEditora, form)
-    .subscribe(res => {
-        this.isLoadingResults = false;
-        this.router.navigate(['/editoras-detalhe/' + this.idEditora]);
-      }, (err) => {
-        console.log(err);
-        this.isLoadingResults = false;
-      }
-    );
-}
+  updateEditora() {
+    if (this.editoraForm?.valid) {
+      this.isLoadingResults = true;
+      console.log('this.id:', this.id);
+      console.log('this.editoraForm:', this.editoraForm.value);
+      this.api.updateEditora(this.id, this.editoraForm.value).subscribe(
+        () => {
+          this.isLoadingResults = false;
+          this.successMessage = 'Editora atualizada com sucesso!';
+          this.router.navigate(['/editoras']);
+        },
+        (error: any) => {
+          console.error(error);
+          this.isLoadingResults = false;
+          this.errorMessage = 'Erro ao atualizar editora. Por favor, tente novamente.';
+        }
+      );
+    }
+  }
 
+  clearMessages() {
+    this.successMessage = '';
+    this.errorMessage = '';
+  }
+
+  voltarListaEditoras() {
+    this.router.navigate(['/editoras']);
+  }
 }

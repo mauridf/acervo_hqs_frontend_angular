@@ -1,10 +1,31 @@
 <div>
   <h3>Editar Editora</h3>
 </div>
-<form class="example-container" [formGroup]="editoraForm" (ngSubmit)="updateEditora(editoraForm.value)">
+
+<div *ngIf="successMessage" class="success-message">
+  {{ successMessage }}
+  <button mat-icon-button (click)="clearMessages()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<div *ngIf="errorMessage" class="error-message">
+  {{ errorMessage }}
+  <button mat-icon-button (click)="clearMessages()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<form *ngIf="editoraForm" class="example-container" [formGroup]="editoraForm" (ngSubmit)="updateEditora()">
+  <!-- Input hidden para o ID -->
+  <input type="hidden" formControlName="id">
   <mat-form-field>
     <input matInput name="nomeEditora" placeholder="Nome da Editora" formControlName="nomeEditora">
   </mat-form-field>
 
-  <button type="submit" [disabled]="!editoraForm.valid" mat-button color="primary" >Editar</button>
+  <button type="submit" mat-button color="primary">Editar</button>
 </form>
+
+<div style="margin-top: 20px;">
+  <button mat-flat-button color="primary" (click)="voltarListaEditoras()">Voltar para a Lista de Editoras</button>
+</div>
