@@ -4,6 +4,7 @@ import { Observable, of, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap, map } from 'rxjs/operators';
 import { Personagens } from '../models/personagem';
+import { Hqs } from '../models/hqs';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -18,6 +19,7 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
+  //EDITORA
   getEditoras (): Observable<Editoras[]> {
     const url = `${apiUrl}/Editora/ObterTodasEditoras`
     return this.http.get<Editoras[]>(url)
@@ -61,6 +63,7 @@ export class ApiService {
     );
   }
 
+  //PERSONAGEM
   getPersonagens (): Observable<Personagens[]> {
     const url = `${apiUrl}/Personagem/ObterTodosPersonagens`
     return this.http.get<Personagens[]>(url)
@@ -104,6 +107,49 @@ export class ApiService {
     );
   }
 
+  //HQ
+  getHqs (): Observable<Hqs[]> {
+    const url = `${apiUrl}/Hq/ObterTodasHqs`
+    return this.http.get<Hqs[]>(url)
+      .pipe(
+        tap(hqs => console.log('leu as hqs')),
+        catchError(this.handleError('getHqs', []))
+      );
+  }
+
+  getHq(id: number): Observable<Hqs> {
+    const url = `${apiUrl}/Hq/ObterHqPorId/${id}`;
+    return this.http.get<Hqs>(url).pipe(
+      tap(_ => console.log(`leu a Hq id=${id}`)),
+      catchError(this.handleError<Hqs>(`getHq id=${id}`))
+    );
+  }
+
+  addHq (hq: any): Observable<Hqs> {
+    const url = `${apiUrl}/Hq/CriarHq`
+    return this.http.post<Hqs>(url, hq, httpOptions).pipe(
+      // tslint:disable-next-line:no-shadowed-variable
+      tap((hq: Hqs) => console.log(`adicionou a Hq com w/ id=${hq.id}`)),
+      catchError(this.handleError<Hqs>('addHq'))
+    );
+  }
+
+  updateHq(id: any, hq: any): Observable<any> {
+    const url = `${apiUrl}/Hq/AtualizarHq/${id}`;
+    return this.http.put(url, hq, httpOptions).pipe(
+      tap(_ => console.log(`atualiza a hq com id=${id}`)),
+      catchError(this.handleError<any>('updateHq'))
+    );
+  }
+
+  deleteHq (id: any): Observable<Hqs> {
+    const url = `${apiUrl}/Hq/DeletarHq/${id}`;
+
+    return this.http.delete<Hqs>(url, httpOptions).pipe(
+      tap(_ => console.log(`remove a hq com id=${id}`)),
+      catchError(this.handleError<Hqs>('deleteHq'))
+    );
+  }
 
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {

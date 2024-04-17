@@ -82,11 +82,11 @@ export class PersonagensComponent implements OnInit {
       case 3:
         return 'Anti-Herói';
       case 4:
-        return 'Personagem de Fábulas'
+        return 'Personagem de Fábulas';
       case 5:
-        return 'Personalidade Histórica'
+        return 'Personalidade Histórica';
         case 5:
-          return 'Comum'
+          return 'Comum';
       default:
         return 'Desconhecido';
     }
